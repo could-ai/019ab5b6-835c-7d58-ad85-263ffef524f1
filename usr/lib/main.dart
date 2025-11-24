@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'details_form_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -148,8 +149,6 @@ class HomeScreen extends StatelessWidget {
         final idea = ideas[index];
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.05),
@@ -157,24 +156,42 @@ class HomeScreen extends StatelessWidget {
                 offset: const Offset(0, 4),
               ),
             ],
+            borderRadius: BorderRadius.circular(16),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                idea['icon'] as IconData,
-                size: 32,
-                color: idea['color'] as Color,
+          child: Material(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsFormScreen(
+                      category: idea['title'] as String,
+                    ),
+                  ),
+                );
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    idea['icon'] as IconData,
+                    size: 32,
+                    color: idea['color'] as Color,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    idea['title'] as String,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
-              Text(
-                idea['title'] as String,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
-            ],
+            ),
           ),
         );
       },
